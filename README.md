@@ -117,13 +117,20 @@ kubectl get nodes
 ### 1.4 Open Kubernetes Dashboard (optional)
 
 ```bash
-minikube dashboard &
-# Click Web Preview → Preview on Port 41655 (port may vary)
+minikube addons enable dashboard
+kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:80
+# Click Web Preview → Preview on Port 8080
 ```
 
 ---
 
 ## Phase 2 – Database & Networking (20 min)
+
+> Open a new tab and navigate into the project folder first:
+>
+> ```bash
+> cd ~/deployment
+> ```
 
 ### 2.1 Deploy PostgreSQL
 
