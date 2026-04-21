@@ -51,14 +51,6 @@ git --version
 
 > **Note:** Minikube, k6, and Hurl must be installed manually in Cloud Shell — see the steps below.
 
-### Install Minikube on Cloud Shell
-
-```bash
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
-minikube version
-```
-
 ### Install k6 on Cloud Shell
 
 ```bash
@@ -68,13 +60,15 @@ sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.g
 echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
   | sudo tee /etc/apt/sources.list.d/k6.list
 sudo apt-get update && sudo apt-get install k6
+k6 version
 ```
 
 ### Install Hurl on Cloud Shell
 
 ```bash
-curl -LO https://github.com/Orange-OpenSource/hurl/releases/latest/download/hurl_amd64.deb
-sudo dpkg -i hurl_amd64.deb
+HURL_VERSION=$(curl -s https://api.github.com/repos/Orange-OpenSource/hurl/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+curl -LO "https://github.com/Orange-OpenSource/hurl/releases/download/${HURL_VERSION}/hurl_${HURL_VERSION}_amd64.deb"
+sudo dpkg -i "hurl_${HURL_VERSION}_amd64.deb"
 hurl --version
 ```
 
@@ -89,7 +83,7 @@ hurl --version
 | kubectl | `curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install kubectl /usr/local/bin/kubectl` |
 | Go 1.22+ | `sudo apt install golang-go` or [go.dev/dl](https://go.dev/dl/) |
 | k6 | `sudo apt install k6` or [k6.io/docs/get-started/installation](https://k6.io/docs/get-started/installation/) |
-| Hurl | `curl -LO https://github.com/Orange-OpenSource/hurl/releases/latest/download/hurl_amd64.deb && sudo dpkg -i hurl_amd64.deb` |
+| Hurl | `HURL_VERSION=$(curl -s https://api.github.com/repos/Orange-OpenSource/hurl/releases/latest \| grep '"tag_name"' \| cut -d'"' -f4) && curl -LO "https://github.com/Orange-OpenSource/hurl/releases/download/${HURL_VERSION}/hurl_${HURL_VERSION}_amd64.deb" && sudo dpkg -i "hurl_${HURL_VERSION}_amd64.deb"` |
 
 ---
 
