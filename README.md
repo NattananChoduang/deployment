@@ -311,6 +311,26 @@ tmux new -s runner
 # Press Ctrl+B then D to detach
 ```
 
+> **Note:** Cloud Shell has only **5GB** of home disk. If the pipeline fails with `ENOSPC: no space left on device`, run this to free up space before retrying:
+>
+> ```bash
+> # Check disk usage
+> df -h ~
+> du -sh ~/* 2>/dev/null | sort -rh | head -10
+>
+> # Clear runner tool cache and build artifacts
+> rm -rf ~/actions-runner/_work
+>
+> # Clear Docker cache
+> docker system prune -af --volumes
+>
+> # Clear Go module/build cache
+> go clean -cache -modcache
+>
+> # Remove leftover .deb files
+> rm -f ~/*.deb
+> ```
+
 ### 4.3 The Magic Moment – Test CI/CD
 
 ```bash
