@@ -96,7 +96,10 @@ hurl --version
 3. Clone your own fork:
 
 ```bash
-git clone https://github.com/<YOUR_USERNAME>/deployment.git
+# Set your GitHub username (use this for all subsequent commands)
+export GITHUB_USERNAME=<your-github-username>
+
+git clone https://github.com/${GITHUB_USERNAME}/deployment.git
 cd deployment
 ```
 
@@ -249,27 +252,27 @@ curl http://localhost:8081/items
 docker stop $(docker ps -q --filter ancestor=${DOCKER_USERNAME}/go-api:latest)
 ```
 
-### 3.4 Push Image to Docker Hub
+### 3.5 Push Image to Docker Hub
 
 ```bash
 docker login
 docker push ${DOCKER_USERNAME}/go-api:latest
 ```
 
-### 3.5 Update Image Name in k8s/api-deployment.yaml
+### 3.6 Update Image Name in k8s/api-deployment.yaml
 
 ```bash
 sed -i "s/DOCKER_USERNAME/${DOCKER_USERNAME}/g" k8s/api-deployment.yaml
 ```
 
-### 3.6 Deploy Go API
+### 3.7 Deploy Go API
 
 ```bash
 kubectl apply -f k8s/api-deployment.yaml
 kubectl get pods -w   # Wait until status is Running
 ```
 
-### 3.7 Test the API via Minikube
+### 3.8 Test the API via Minikube
 
 ```bash
 NODE_IP=$(minikube ip)
@@ -317,7 +320,7 @@ tar xzf ./actions-runner-linux-x64-2.316.1.tar.gz
 # Get the registration token from GitHub:
 # → Go to your repo → Settings → Actions → Runners → New self-hosted runner
 # → Select Linux / x64 → Copy the token shown on that page (valid for 1 hour)
-./config.sh --url https://github.com/<YOUR_USERNAME>/deployment --token <TOKEN>
+./config.sh --url https://github.com/${GITHUB_USERNAME}/deployment --token <TOKEN>
 
 # Start runner in the background using tmux
 tmux new -s runner
