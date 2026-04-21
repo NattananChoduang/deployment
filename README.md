@@ -93,14 +93,15 @@ hurl --version
 
 ```bash
 # Fork this repo on GitHub, then clone it
-git clone https://github.com/<YOUR_USERNAME>/deployment.git
+git clone https://github.com/pradist/deployment.git
 cd deployment
 ```
 
 ### 1.2 Start Minikube
 
 ```bash
-minikube start --driver=docker --cpus=4 --memory=4096
+minikube start --driver=docker
+minikube status
 ```
 
 Expected output: `Done! kubectl is now configured to use "minikube" cluster`
