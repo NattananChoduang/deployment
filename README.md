@@ -89,11 +89,14 @@ hurl --version
 
 ## Phase 1 – Environment Setup (15–20 min)
 
-### 1.1 Fork & Clone Template Repo
+### 1.1 Fork Template Repo
+
+1. Open [https://github.com/pradist/deployment](https://github.com/pradist/deployment)
+2. Click **Fork** (top-right) → **Create fork**
+3. Clone your own fork:
 
 ```bash
-# Fork this repo on GitHub, then clone it
-git clone https://github.com/pradist/deployment.git
+git clone https://github.com/<YOUR_USERNAME>/deployment.git
 cd deployment
 ```
 
@@ -234,8 +237,12 @@ docker run --rm -d -p 8081:8080 \
 curl http://localhost:8081/livez
 curl http://localhost:8081/readyz
 curl http://localhost:8081/
+curl http://localhost:8081/items
+```
 
-# Stop the container
+### 3.4 Stop the container
+
+```bash
 docker stop $(docker ps -q --filter ancestor=<DOCKER_USERNAME>/go-api:latest)
 ```
 
@@ -293,7 +300,9 @@ curl -o actions-runner-linux-x64-2.316.1.tar.gz -L \
   https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-linux-x64-2.316.1.tar.gz
 tar xzf ./actions-runner-linux-x64-2.316.1.tar.gz
 
-# Configure with the token from GitHub
+# Get the registration token from GitHub:
+# → Go to your repo → Settings → Actions → Runners → New self-hosted runner
+# → Select Linux / x64 → Copy the token shown on that page (valid for 1 hour)
 ./config.sh --url https://github.com/<YOUR_USERNAME>/deployment --token <TOKEN>
 
 # Start runner in the background using tmux
@@ -363,9 +372,9 @@ k6 run -e BASE_URL=http://$(minikube ip):30080 tests/k6/script.js
 
 Watch the graphs in Grafana while k6 is running:
 
-- **Request rate** will spike
-- **CPU usage** of Pods will increase
-- **P95 latency** will change with load
+* **Request rate** will spike
+* **CPU usage** of Pods will increase
+* **P95 latency** will change with load
 
 ### 5.5 Functional Test with Hurl
 
